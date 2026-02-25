@@ -10,8 +10,12 @@
     <div id="main">
         <span id="title">COLORGUESSR</span>
         <div class="box">
-            <div id="box1">gh</div>
-            <div id="box2">iu</div>
+            <div id="box1"></div>
+            <div id="guessbox">
+                <span id="info">Guess The Color</span>
+                <input type="text" name="guess" id="guess" placeholder="#000000" maxlength="7" pattern="^#[0-9A-Fa-f]{6}$">
+                <input type="button" value="Submit" id="submit">
+            </div>
         </div>
     </div>
 </body>

@@ -5,6 +5,7 @@ body{
     overflow: hidden;
 }
 #main{
+    margin: 1.5%;
     width: 100%;
     text-align: center;
     display: flex;
@@ -12,11 +13,63 @@ body{
     flex-direction: column;
 }
 #title{
+    margin-top: 0.5%;
     font-size: 30px;
 }
 .box{
-    margin-top: 5%;
+    margin-top: 3%;
     height: 40%;
     width: 70%;
-    background-color: rgb(80, 158, 106);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#box1{
+    width: 350px;
+    height: 350px;
+    background-color: red;
+    border: 3px solid #f9ebf9;
+    margin-bottom: 3%;
+}
+#guessbox{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#info{
+    font-size: 20px;
+    margin-bottom: 1%;
+}
+#guess{
+    width: 346px;
+    height: 25px;
+    background-color: #0f0a0f;
+    border: 2px solid #f9ebf9;
+    transition: 0.15s ease;
+    color: #f9ebf9;
+    text-align: center;
+    font-size: 15px;
+}
+#guess:focus{
+    border: 2px solid #f89af8;
+    outline: none;
+}
+#submit{
+    margin-top: 4%;
+    width: 100px;
+    height: 30px;
+    background-color: #0f0a0f;
+    border: 2px solid #f9ebf9;
+    color: #f9ebf9;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.15s ease;
+}
+#submit:hover{
+    background-color: #f9ebf9;
+    color: #0f0a0f;
+}
+#submit:active{
+    background-color: #f89af8;
+    color: #0f0a0f;
 }
