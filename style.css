@@ -1,0 +1,22 @@
+body{
+    background-color: #0f0a0f;
+    color: #f9ebf9;
+    height: 100vh;
+    overflow: hidden;
+}
+#main{
+    width: 100%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+#title{
+    font-size: 30px;
+}
+.box{
+    margin-top: 5%;
+    height: 40%;
+    width: 70%;
+    background-color: rgb(80, 158, 106);
+}
