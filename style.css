@@ -35,9 +35,12 @@ body{
     flex-direction: column;
     align-items: center;
 }
-#info, #lastGuessInfo{
+#info, #lastGuessInfo, #lastGuessText{
     font-size: 20px;
     margin-bottom: 1%;
+}
+#lastGuessBox{
+    margin-bottom: 3%;
 }
 #guess{
     width: 346px;
@@ -53,7 +56,7 @@ body{
     border: 2px solid #f89af8;
     outline: none;
 }
-#submit{
+#submit,#NewGame{
     margin-top: 4%;
     width: 100px;
     height: 30px;
@@ -64,11 +67,11 @@ body{
     cursor: pointer;
     transition: 0.15s ease;
 }
-#submit:hover{
+#submit:hover,#NewGame:hover{
     background-color: #f9ebf9;
     color: #0f0a0f;
 }
-#submit:active{
+#submit:active,#NewGame:active{
     background-color: #f89af8;
     color: #0f0a0f;
 }
