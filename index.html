@@ -15,8 +15,60 @@
                 <span id="info">Guess The Color</span>
                 <input type="text" name="guess" id="guess" placeholder="#000000" maxlength="7" pattern="^#[0-9A-Fa-f]{6}$">
                 <input type="button" value="Submit" id="submit">
+                <div id="lastGuessContainer">
+                    <span id="lastGuessInfo">Last guess:</span>
+                    <div id="lastGuessBox"></div>
+                    <span id="lastGuessText"></span>
+                </div>
             </div>
         </div>
     </div>
 </body>
 </html>
+<script>
+    let targetColor = '';
+    let attempts = 0;
+
+    function generateRandomColor() {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+    function startGame() {
+        targetColor = generateRandomColor();
+        document.getElementById('box1').style.backgroundColor = targetColor;
+        attempts = 0;
+        document.getElementById('info').textContent = 'Guess The Color';
+        document.getElementById('guess').value = '';
+        document.getElementById('lastGuessContainer').style.display = 'none';
+        document.getElementById('guess').focus();
+    }
+
+    document.getElementById('submit').addEventListener('click', function() {
+        const userGuess = document.getElementById('guess').value.toUpperCase();
+        attempts++;
+
+        if (userGuess === targetColor) {
+            document.getElementById('info').textContent = `Correct in ${attempts} attempt${attempts > 1 ? 's' : ''}`;
+            setTimeout(startGame, 800);
+        } else {
+            document.getElementById('info').textContent = 'Incorrect. Try again!';
+            document.getElementById('lastGuessBox').style.backgroundColor = userGuess;
+            document.getElementById('lastGuessText').textContent = userGuess;
+            document.getElementById('lastGuessContainer').style.display = 'block';
+            document.getElementById('guess').value = '';
+        }
+    });
+
+    document.getElementById('guess').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            document.getElementById('submit').click();
+        }
+    });
+
+    startGame();
+</script>
