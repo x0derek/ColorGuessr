@@ -27,7 +27,6 @@ LEADERBOARD
 TRYBY GRY
 -daily
 -training
--solo
 -1v1
 
 KOLOR DNIA

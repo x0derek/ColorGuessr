@@ -12,6 +12,39 @@ body{
     align-items: center;
     flex-direction: column;
 }
+.hidden{
+    visibility: hidden;
+}
+#languagebox{
+    position: absolute;
+    top: 1.5%;
+    right: 1.5%;
+    width: auto;
+    height: auto;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    background-color: #0f0a0f;
+    transition: 0.15s ease;
+}
+.language{
+    width: 100px;
+    height: 30px;
+    background-color: #0f0a0f;
+    border: 2px solid #f9ebf9;
+    color: #f9ebf9;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.15s ease;
+}
+.language:hover{
+    background-color: #f9ebf9;
+    color: #0f0a0f;
+}
+.language:active{
+    background-color: #f89af8;
+    color: #0f0a0f;
+}
 #title{
     margin-top: 0.5%;
     font-size: 30px;
