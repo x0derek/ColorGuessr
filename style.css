@@ -1,21 +1,56 @@
-body{
+body {
     background-color: #0f0a0f;
     color: #f9ebf9;
     height: 100vh;
     overflow: hidden;
+    margin: 0;
+    font-family: Arial, sans-serif;
 }
-#main{
+
+#main {
     margin: 1.5%;
-    width: 100%;
+    width: calc(100% - 3%);
     text-align: center;
     display: flex;
     align-items: center;
-    flex-direction: column;
+    justify-content: center;
 }
-.hidden{
-    visibility: hidden;
+
+#keyboard {
+    width: 30%;
+    height: 100%;
+    float: left;
 }
-#languagebox{
+
+.key {
+    margin-top: 1%;
+    width: 38px;
+    height: 38px;
+    background-color: #0f0a0f;
+    border: 2px solid #f9ebf9;
+    color: #f9ebf9;
+    font-size: 15px;
+}
+
+#guessed {
+    width: 30%;
+    height: 100%;
+    float: left;
+}
+
+#game {
+    width: 30%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hidden {
+    display: none;
+}
+
+#languagebox {
     position: absolute;
     top: 1.5%;
     right: 1.5%;
@@ -27,7 +62,8 @@ body{
     background-color: #0f0a0f;
     transition: 0.15s ease;
 }
-.language{
+
+.language {
     width: 100px;
     height: 30px;
     background-color: #0f0a0f;
@@ -37,46 +73,58 @@ body{
     cursor: pointer;
     transition: 0.15s ease;
 }
-.language:hover{
+
+.language:hover {
     background-color: #f9ebf9;
     color: #0f0a0f;
 }
-.language:active{
+
+.language:active {
     background-color: #f89af8;
     color: #0f0a0f;
 }
-#title{
-    margin-top: 0.5%;
+
+#title {
+    text-align: center;
+    margin-bottom: 2%;
     font-size: 30px;
 }
-.box{
-    margin-top: 3%;
+
+.box {
+    margin-top: 0.25%;
     height: 40%;
     width: 70%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-#box1{
+
+#box1 {
     width: 350px;
     height: 350px;
     border: 3px solid #f9ebf9;
     margin-bottom: 3%;
 }
-#guessbox{
+
+#guessbox {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-#info, #lastGuessInfo, #lastGuessText{
+
+#info,
+#lastGuessInfo,
+#lastGuessText {
     font-size: 20px;
     margin-bottom: 1%;
 }
-#lastGuessBox{
+
+#lastGuessBox {
     margin-bottom: 3%;
 }
-#guess{
-    width: 346px;
+
+.colorInput {
+    width: 25px;
     height: 25px;
     background-color: #0f0a0f;
     border: 2px solid #f9ebf9;
@@ -85,11 +133,14 @@ body{
     text-align: center;
     font-size: 15px;
 }
-#guess:focus{
+
+.colorInput:focus {
     border: 2px solid #f89af8;
     outline: none;
 }
-#submit,#NewGame{
+
+#submit,
+#NewGame {
     margin-top: 4%;
     width: 100px;
     height: 30px;
@@ -100,20 +151,26 @@ body{
     cursor: pointer;
     transition: 0.15s ease;
 }
-#submit:hover,#NewGame:hover{
+
+#submit:hover,
+#NewGame:hover {
     background-color: #f9ebf9;
     color: #0f0a0f;
 }
-#submit:active,#NewGame:active{
+
+#submit:active,
+#NewGame:active {
     background-color: #f89af8;
     color: #0f0a0f;
 }
-#lastGuessContainer{
+
+#lastGuessContainer {
     display: none;
     margin-top: 2%;
     text-align: center;
 }
-#lastGuessBox{
+
+#lastGuessBox {
     width: 100px;
     height: 100px;
     border: 2px solid #f9ebf9;

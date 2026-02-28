@@ -1,5 +1,5 @@
 <!--
-CollorGuessr - Color Guessing Game
+ColorGuessr - Color Guessing Game
 Copyright (C) 2026 Igor 'x0derek' Karpowicz
 
 This program is free software: you can redistribute it and/or modify
@@ -17,135 +17,226 @@ by the Free Software Foundation, either version 3 of the License, or
 </head>
 <body>
     <div id="main">
-        <span id="title">COLORGUESSR</span>
         <div id="languagebox">
             <button id="language" class="language">LANGUAGE</button>
-            <button disabled id="eng" class="language hidden">ENG</button>
-            <button disabled id="esp" class="language hidden">ESP</button>
-            <button disabled id="pl" class="language hidden">PL</button>
-            <button disabled id="ger" class="language hidden">GER</button>
+            <button id="eng" class="language hidden">ENG</button>
+            <button id="esp" class="language hidden">ESP</button>
+            <button id="pl" class="language hidden">PL</button>
+            <button id="ger" class="language hidden">GER</button>
         </div>
-        <div class="box">
-            <div id="box1"></div>
-            <div id="guessbox">
-                <span id="info">Guess The Color</span>
-                <input type="text" name="guess" id="guess" placeholder="for example: 00FF00" maxlength="6" pattern="[0-9A-Fa-f]{6}$">
-                <input type="button" value="Submit" id="submit">
-                <input type="button" value="Play Again" id="NewGame" style="display:none;">
-                <div id="lastGuessContainer">
-                    <span id="lastGuessInfo">Your guess:</span><br>
-                    <span id="lastGuessText"></span>
-                    <div id="lastGuessBox"></div>
+        <div id="keyboard">
+            <div class="keyRow">
+                <button class="key" id="q" disabled>Q</button>
+                <button class="key" id="w" disabled>W</button>
+                <button class="key" id="e" disabled>E</button>
+                <button class="key" id="r" disabled>R</button>
+                <button class="key" id="t" disabled>T</button>
+                <button class="key" id="y" disabled>Y</button>
+                <button class="key" id="u" disabled>U</button>
+                <button class="key" id="i" disabled>I</button>
+                <button class="key" id="o" disabled>O</button>
+                <button class="key" id="p" disabled>P</button>
+            </div>
+            <div class="keyRow">
+                <button class="key" id="a" disabled>A</button>
+                <button class="key" id="s" disabled>S</button>
+                <button class="key" id="d" disabled>D</button>
+                <button class="key" id="f" disabled>F</button>
+                <button class="key" id="g" disabled>G</button>
+                <button class="key" id="h" disabled>H</button>
+                <button class="key" id="j" disabled>J</button>
+                <button class="key" id="k" disabled>K</button>
+                <button class="key" id="l" disabled>L</button>
+            </div>
+            <div class="keyRow">
+                <button class="key" id="z" disabled>Z</button>
+                <button class="key" id="x" disabled>X</button>
+                <button class="key" id="c" disabled>C</button>
+                <button class="key" id="v" disabled>V</button>
+                <button class="key" id="b" disabled>B</button>
+                <button class="key" id="n" disabled>N</button>
+                <button class="key" id="m" disabled>M</button>
+            </div>
+        </div>
+        <div id="game">
+            <div class="box">
+                <span id="title">COLORGUESSR</span>
+                <div id="box1"></div>
+                <div id="guessbox">
+                    <span id="info">Guess The Color</span>
+                    <div id="inputContainer">
+                        <input type="text" class="colorInput" maxlength="1" pattern="[0-9A-Fa-f]">
+                        <input type="text" class="colorInput" maxlength="1" pattern="[0-9A-Fa-f]">
+                        <input type="text" class="colorInput" maxlength="1" pattern="[0-9A-Fa-f]">
+                        <input type="text" class="colorInput" maxlength="1" pattern="[0-9A-Fa-f]">
+                        <input type="text" class="colorInput" maxlength="1" pattern="[0-9A-Fa-f]">
+                        <input type="text" class="colorInput" maxlength="1" pattern="[0-9A-Fa-f]">
+                    </div>
+                    <input type="button" value="Submit" id="submit">
+                    <input type="button" value="Play Again" id="NewGame" style="display:none;">
+                    <div id="lastGuessContainer">
+                        <span id="lastGuessInfo">Your guess:</span><br>
+                        <span id="lastGuessText"></span>
+                        <div id="lastGuessBox"></div>
+                    </div>
                 </div>
             </div>
         </div>
+        <div id="guessed"></div>
     </div>
+    
 
-<script>
-    let targetColor = '';
-    let attempts = 0;
-    let currentLanguage = 'eng';
+    <script>
+        let targetColor = '';
+        let attempts = 0;
+        let currentLanguage = 'eng';
+        let showInputColors = false;
+        const inputs = document.querySelectorAll('.colorInput');
 
-    function generateRandomColor() {
-        const letters = '0123456789ABCDEF';
-        let color = '#';
-        for (let i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
+        function generateRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
         }
-        return color;
-    }
 
-    function startGame() {
-        targetColor = generateRandomColor();
-        document.getElementById('box1').style.backgroundColor = targetColor;
-        attempts = 0;
-        document.getElementById('info').textContent = 'Guess The Color';
-        document.getElementById('guess').value = '';
-        document.getElementById('lastGuessContainer').style.display = 'none';
-        document.getElementById('submit').style.display = 'block';
-        document.getElementById('NewGame').style.display = 'none';
-        document.getElementById('guess').focus();
-    }
+        function startGame() {
+            targetColor = generateRandomColor();
+            document.getElementById('box1').style.backgroundColor = targetColor;
+            attempts = 0;
+            showInputColors = false;
+            document.getElementById('info').textContent = translations[currentLanguage].info;
+            inputs.forEach(input => {
+                input.value = '';
+                input.style.backgroundColor = '';
+            });
+            document.getElementById('lastGuessContainer').style.display = 'none';
+            document.getElementById('submit').style.display = 'block';
+            document.getElementById('NewGame').style.display = 'none';
+            inputs[0].focus();
+        }
 
-    document.getElementById('submit').addEventListener('click', function() {
-        let userGuess = document.getElementById('guess').value.toUpperCase();
-        
-        if (!userGuess.startsWith('#')) {
+        function updateInputColors() {
+            if (!showInputColors) return;
+            
+            const targetValue = targetColor.substring(1);
+
+            inputs.forEach((input, index) => {
+                const char = input.value.toUpperCase();
+                
+                if (!char) {
+                    input.style.backgroundColor = '';
+                } else if (char === targetValue[index]) {
+                    input.style.backgroundColor = '#90EE90';
+                    input.style.color = '#0f0a0f';
+                } else if (targetValue.includes(char)) {
+                    input.style.backgroundColor = '#FFFF00';
+                    input.style.color = '#0f0a0f';
+                } else {
+                    input.style.backgroundColor = '#D3D3D3';
+                    input.style.color = '#0f0a0f';
+                }
+            });
+        }
+
+        inputs.forEach((input, index) => {
+            input.addEventListener('input', (e) => {
+                if (e.target.value && /[0-9A-Fa-f]/.test(e.target.value)) {
+                    if (index < inputs.length - 1) {
+                        inputs[index + 1].focus();
+                    }
+                }
+                updateInputColors();
+            });
+
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && !input.value && index > 0) {
+                    inputs[index - 1].focus();
+                    inputs[index - 1].value = '';
+                    updateInputColors();
+                } else if (e.key === 'Enter') {
+                    document.getElementById('submit').click();
+                }
+            });
+        });
+
+        const translations = {
+            eng: { info: 'Guess The Color', lastGuessInfo: 'Your Guess:', name: 'ENG' },
+            esp: { info: 'Adivina el color', lastGuessInfo: 'Tu color:', name: 'ESP' },
+            pl: { info: 'Zgadnij kolor', lastGuessInfo: 'Twój kolor:', name: 'PL' },
+            ger: { info: 'Errate die Farbe', lastGuessInfo: 'Deine Farbe:', name: 'GER' }
+        };
+
+        document.getElementById('submit').addEventListener('click', function() {
+            showInputColors = true;
+            updateInputColors();
+            
+            let userGuess = Array.from(inputs).map(input => input.value.toUpperCase()).join('');
+            
+            if (userGuess.length < 6) {
+                document.getElementById('info').textContent = 'Please fill all fields!';
+                return;
+            }
+
             userGuess = '#' + userGuess;
+            attempts++;
+
+            if (userGuess === targetColor) {
+                document.getElementById('info').textContent = `Correct in ${attempts} attempt${attempts > 1 ? 's' : ''}`;
+                document.getElementById('lastGuessInfo').textContent = translations[currentLanguage].lastGuessInfo;
+                document.getElementById('lastGuessText').textContent = targetColor;
+                document.getElementById('lastGuessBox').style.backgroundColor = targetColor;
+                document.getElementById('lastGuessContainer').style.display = 'block';
+                document.getElementById('submit').style.display = 'none';
+                document.getElementById('NewGame').style.display = 'block';
+            } else {
+                document.getElementById('info').textContent = 'Incorrect. Try again!';
+                document.getElementById('lastGuessText').textContent = userGuess;
+                document.getElementById('lastGuessBox').style.backgroundColor = userGuess;
+                document.getElementById('lastGuessContainer').style.display = 'block';
+            }
+        });
+
+        document.getElementById('NewGame').addEventListener('click', startGame);
+
+        const languageButtons = document.getElementsByClassName('language');
+        const info = document.getElementById('info');
+        const lastGuessInfo = document.getElementById('lastGuessInfo');
+        const languagebox = document.getElementById('languagebox');
+        const languageButton = document.getElementById('language');
+
+        function hideLanguages() {
+            for (let i = 1; i < languageButtons.length; i++) {
+                languageButtons[i].classList.add('hidden');
+                languageButtons[i].disabled = true;
+            }
         }
-        
-        attempts++;
 
-        if (userGuess === targetColor) {
-            document.getElementById('info').textContent = `Correct in ${attempts} attempt${attempts > 1 ? 's' : ''}`;
-            document.getElementById('lastGuessInfo').textContent = 'Your Guess:';
-            document.getElementById('lastGuessText').textContent = targetColor;
-            document.getElementById('lastGuessBox').style.backgroundColor = targetColor;
-            document.getElementById('lastGuessContainer').style.display = 'block';
-            document.getElementById('submit').style.display = 'none';
-            document.getElementById('NewGame').style.display = 'block';
-            document.getElementById('guess').value = '';
-        } else {
-            document.getElementById('info').textContent = 'Incorrect. Try again!';
-            document.getElementById('lastGuessText').textContent = userGuess;
-            document.getElementById('lastGuessBox').style.backgroundColor = userGuess;
-            document.getElementById('lastGuessContainer').style.display = 'block';
-            document.getElementById('guess').value = '';
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            info.textContent = translations[lang].info;
+            lastGuessInfo.textContent = translations[lang].lastGuessInfo;
+            languageButton.textContent = translations[lang].name;
+            hideLanguages();
         }
-    });
 
-    document.getElementById('NewGame').addEventListener('click', startGame);
+        languageButton.addEventListener('mouseover', function() {
+            for (let i = 1; i < languageButtons.length; i++) {
+                languageButtons[i].classList.remove('hidden');
+                languageButtons[i].disabled = false;
+            }
+        });
 
-    document.getElementById('guess').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            document.getElementById('submit').click();
-        }
-    });
+        languagebox.addEventListener('mouseleave', hideLanguages);
 
-    startGame();
+        Object.keys(translations).forEach(lang => {
+            document.getElementById(lang).addEventListener('click', () => setLanguage(lang));
+        });
 
-    const languageButtons = document.getElementsByClassName('language');
-    const info = document.getElementById('info');
-    const lastGuessInfo = document.getElementById('lastGuessInfo');
-    const languagebox = document.getElementById('languagebox');
-    const languageButton = document.getElementById('language');
-
-    const translations = {
-        eng: { info: 'Guess The Color', lastGuessInfo: 'Your Color:', name: 'ENG' },
-        esp: { info: 'Adivina el color', lastGuessInfo: 'Tu color:', name: 'ESP' },
-        pl: { info: 'Zgadnij kolor', lastGuessInfo: 'Twój kolor:', name: 'PL' },
-        ger: { info: 'Errate die Farbe', lastGuessInfo: 'Deine Farbe:', name: 'GER' }
-    };
-
-function hideLanguages() {
-    for (let i = 1; i < languageButtons.length; i++) {
-        languageButtons[i].classList.add('hidden');
-        languageButtons[i].disabled = true;
-    }
-}
-    function setLanguage(lang) {
-        currentLanguage = lang;
-        info.textContent = translations[lang].info;
-        lastGuessInfo.textContent = translations[lang].lastGuessInfo;
-        languageButton.textContent = translations[lang].name;
-        hideLanguages();
-    }
-
-    languageButton.addEventListener('mouseover', function() {
-        for (let i = 1; i < languageButtons.length; i++) {
-            languageButtons[i].classList.remove('hidden');
-            languageButtons[i].disabled = false;
-        }
-    });
-
-    languagebox.addEventListener('mouseleave', hideLanguages);
-
-    Object.keys(translations).forEach(lang => {
-        document.getElementById(lang).addEventListener('click', () => setLanguage(lang));
-    });
-
-    // Set English as default
-    setLanguage('eng');
-</script>
+        setLanguage('eng');
+        startGame();
+    </script>
 </body>
 </html>
